@@ -17,7 +17,7 @@ bubbleSort.swap = function (array, indOne, indTwo) {
   array[indTwo] = indOneVal;
   return array;
 }
-
+g
 bubbleSort.compare = function (numOne, numTwo) {
   if (numOne > numTwo) {return true}
   else {return false}
