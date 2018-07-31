@@ -1,39 +1,36 @@
 function split(wholeArray) {
-
-  /* your code here to define the firstHalf and secondHalf arrays */
-  let firstHalf = [];
-  let secondHalf = [];
-  if (wholeArray.length > 1){
-    if (wholeArray.length % 2 === 0){
-      firstHalf = wholeArray.slice(0, wholeArray.length/2);
-      secondHalf = wholeArray.slice(wholeArray.length/2, wholeArray.length);
-    } else {
-      firstHalf = wholeArray.slice(0, ((wholeArray.length-1)/2));
-      secondHalf = wholeArray.slice(((wholeArray.length-1)/2), wholeArray.length);
-    }
-    return [firstHalf, secondHalf];
-  }
-  return wholeArray;
+  const center = wholeArray.length/2;
+  const arrOne = wholeArray.slice(0, center);
+  const arrTwo = wholeArray.slice(center);
+  return [arrOne, arrTwo];
 }
 
 function merge(arrOne, arrTwo) {
   let newArr = [];
-
-  while (arrOne.length > 0 || arrTwo.length > 0) {
-    if (arrOne[0] <= arrTwo[0]) {
-      newArr.push(arrOne[0]);
-      arrOne.shift();
+  let oneIdx = 0;
+  let twoIdx = 0;
+  while (oneIdx < arrOne.length && twoIdx < arrTwo.length) {
+    if (arrOne[oneIdx] < arrTwo[twoIdx]) {
+      newArr.push(arrOne[oneIdx++]);
     } else {
-      newArr.push(arrTwo[0]);
-      arrTwo.shift();
+      newArr.push(arrTwo[twoIdx++]);
     }
+  }
+  for (; oneIdx < arrOne.length; oneIdx++) {
+    newArr.push(arrOne[oneIdx]);
+  }
+  for (; twoIdx < arrTwo.length; twoIdx++) {
+    newArr.push(arrTwo[twoIdx]);
   }
   return newArr;
 }
 
 function mergeSort(array) {
-  let arr = split(array);
-  let firstArr = arr.slice(0,1);
-  let secondArr = arr.shift();
-
+  if (array.length < 2) {
+    return array;
+  }
+  let newArr = split(array);
+  let firstArr = newArr[0];
+  let secondArr = newArr[1];
+return merge(mergeSort(firstArr), mergeSort(secondArr));
 }
